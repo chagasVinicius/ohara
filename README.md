@@ -1,4 +1,5 @@
 # ohara
+![ohara-miles](resources/ohara-miles.jpeg)
 ## to-do list
 - [ ] inference mutual information'
 - [ ] cutoff using permutation'
