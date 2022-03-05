@@ -1,7 +1,8 @@
 (ns experiment
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [nextjournal.clerk :as clerk]))
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :as str]
+   [nextjournal.clerk :as clerk]))
 
 ^{::clerk/visibility :fold}
 (defn- third-entry-by-line [[row-label & line]]
