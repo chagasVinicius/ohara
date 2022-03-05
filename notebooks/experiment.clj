@@ -1,18 +1,8 @@
 (ns experiment
   (:require
-   [clojure.java.io :as io]
-   [clojure.string :as str]
-   [nextjournal.clerk :as clerk]))
+   [nextjournal.clerk :as clerk]
+   [ohara.preprocess :as preprocess]))
 
-^{::clerk/visibility :fold}
-(defn- third-entry-by-line [[row-label & line]]
-  (loop [[_first _second third & ls] line
-         result [row-label]]
-    (if (nil? third)
-      result
-      (recur
-       ls
-       (conj result third)))))
 ^{::clerk/visibility :fold}
 (defn- gene-counts-by-sample-fn [samples gene-counts-by-sample]
   (loop [[sample & samples'] samples
@@ -37,9 +27,7 @@
 
 ^{::clerk/visibility :show}
 (def breast-table
-  (let [[samples counts-type & genes-counts] (->> (line-seq (io/reader "./resources/breast.txt"))
-                                                  (sequence (comp (map #(str/split % #"\t"))
-                                                                  (map third-entry-by-line))))]
+  (let [[samples counts-type & genes-counts] (preprocess/raw-tcga->samples+genes-counts-RPKM "./resources/breast.txt")]
     (map-entries samples genes-counts counts-type)))
 
 (clerk/table breast-table)

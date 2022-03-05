@@ -5,7 +5,7 @@
         meta-csv/meta-csv                  {:mvn/version "0.1.0"}}
 
  :aliases
- {:test {:extra-paths ["test"]
+ {:test {:extra-paths ["test" "test/resources/"]
          :extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.977"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.0.75"}
                        nubank/matcher-combinators {:mvn/version "3.3.1"}
