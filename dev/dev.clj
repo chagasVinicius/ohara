@@ -4,4 +4,5 @@
 
 (comment
   (clerk/serve! {:watch-paths ["notebooks" "src"]})
-  (clerk/show! "notebooks/experiment.clj"))
+  (clerk/show! "notebooks/preprocess.clj")
+  )

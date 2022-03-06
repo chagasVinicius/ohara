@@ -1,5 +1,5 @@
 (ns integration.preprocess.io-test
-  (:require [clojure.test :refer [deftest is testing use-fixtures]]
+  (:require [clojure.test :refer [deftest is]]
             [ohara.preprocess.io :as preprocess.io]))
 
 (deftest raw-tcga->samples+genes-counts-RPKM-test
