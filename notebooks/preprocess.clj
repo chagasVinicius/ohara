@@ -23,24 +23,26 @@
 
 ;; Here is an example of plotting data. We use the entire FOX gene family.
 (defn- map-entries-by-sample [acc gene-counts-by-sample]
-  (let [samples (keys gene-counts-by-sample)
-                  counts (vals gene-counts-by-sample)
-                  gene (:gene gene-counts-by-sample)
-                  entry->map (fn [sample a-count]
-                               {:gene gene
-                                :sample sample
-                                :count a-count})]
-              (into acc (map entry->map samples counts))))
+  (let [samples (keys (dissoc gene-counts-by-sample :gene))
+        counts (vals (dissoc gene-counts-by-sample :gene))
+        gene (:gene gene-counts-by-sample)
+        entry->map (fn [sample a-count]
 
-(let [fox-gene-counts (take 3 (filter #(re-matches #"FOX.*" (:gene %)) breast-table))
-      data-to-plot (reduce map-entries-by-sample [] fox-gene-counts)]
+                     {:gene gene
+                      :sample sample
+                      :count (bigdec a-count)})]
+    (into acc (map entry->map samples counts))))
+
+(let [gene-counts (filter #(re-matches #"BRCA.*" (:gene %)) breast-table)
+      data-to-plot (reduce map-entries-by-sample [] gene-counts)]
   (clerk/vl
    {:data {:values data-to-plot}
-    :width 700
-    :height 500
     :mark {:type :point}
-    :encoding {:x {:value :sample
-                   :type :qualitative}
-               :y {:value :count
+    :width 700
+    :height 700
+    :encoding {:x {:field :sample
+                   :type :ordinal
+                   :axis {:labels false}}
+               :y {:field :count
                    :type :quantitative}
                :color {:field :gene :type :nominal}}}))
